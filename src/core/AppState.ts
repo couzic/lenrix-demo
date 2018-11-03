@@ -1,3 +1,9 @@
-export interface AppState {}
+import { HomeState, initialHomeState } from '../places/home/HomeState'
 
-export const initialAppState: AppState = {}
+export interface AppState {
+  home: HomeState
+}
+
+export const initialAppState: AppState = {
+  home: initialHomeState
+}
