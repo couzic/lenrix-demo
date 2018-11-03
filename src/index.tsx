@@ -1,12 +1,15 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import './index.css'
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { setObservableConfig } from 'recompose'
+import { from, Observable } from 'rxjs'
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: http://bit.ly/CRA-PWA
-serviceWorker.unregister();
+import App from './App'
+
+setObservableConfig({
+  fromESObservable: from as any,
+  toESObservable: (stream: Observable<any>) => stream
+})
+
+ReactDOM.render(<App />, document.getElementById('root'))
