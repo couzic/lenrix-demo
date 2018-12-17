@@ -23,7 +23,7 @@
   "dependencies": {
     "history": "^4.7.2",
     "immutable-lens": "^0.4.2",
-    "lenrix": "^0.5.0",
+    "lenrix": "^0.5.3",
     "observable-tree-router": "0.0.16",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",

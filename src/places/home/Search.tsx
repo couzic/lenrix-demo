@@ -1,21 +1,28 @@
 import React from 'react'
+import { componentFromStream } from 'recompose'
+import { map } from 'rxjs/operators'
 
+import { core } from '../../core'
 import { Message } from '../../domain/Message'
 
-const defaultValue = ''
-const onChange = (value: string) => console.log('onChange')
+type ChangeEvent = React.ChangeEvent<HTMLInputElement>
+const { store } = core.home
+
+const onSearchInputValueChanged = (event: ChangeEvent) =>
+  store.dispatch({ searchInputValueChanged: event.target.value })
+
 const messages: Message[] = []
 const loading = false
 const cancel = () => console.log('cancel')
 
-export const Search: React.SFC = () => {
-  return (
+const component$ = store.pick('searchInputValue').pipe(
+  map(({ searchInputValue }) => (
     <div className="Search">
       <input
         type="text"
         placeholder="Search for a Beer"
-        defaultValue={defaultValue}
-        onChange={evt => onChange(evt.target.value)}
+        value={searchInputValue}
+        onChange={onSearchInputValueChanged}
       />
       {loading && (
         <button type="button" onClick={cancel}>
@@ -35,5 +42,7 @@ export const Search: React.SFC = () => {
         </ul>
       )}
     </div>
-  )
-}
+  ))
+)
+
+export const Search = componentFromStream(() => component$)

@@ -3,10 +3,14 @@ import { AppDependencies } from './AppDependencies'
 import { createAppStore } from './AppStore'
 import { createRouter } from './Router'
 
-export const createAppCore = (dependencies: AppDependencies) => {
-  const router = createRouter(dependencies.history)
+export const createAppCore = ({
+  history,
+  beerService,
+  scheduler
+}: AppDependencies) => {
+  const router = createRouter(history)
   const appStore = createAppStore()
-  const home = { store: createHomeStore(appStore) }
+  const home = { store: createHomeStore(appStore, beerService, scheduler) }
   return { router, appStore, home }
 }
 

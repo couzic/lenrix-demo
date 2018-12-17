@@ -1,3 +1,4 @@
-import { createAppCore } from "./core/AppCore";
+import { createAppCore } from './core/AppCore'
+import { createProductionDependencies } from './core/AppDependencies'
 
-export const core = createAppCore();
+export const core = createAppCore(createProductionDependencies())

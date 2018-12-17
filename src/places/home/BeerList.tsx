@@ -1,12 +1,13 @@
 import React from 'react'
+import { componentFromStream } from 'recompose'
+import { map } from 'rxjs/operators'
 
-import { Beer } from '../../domain/Beer'
+import { core } from '../../core'
 
-const beers: Beer[] = []
-const loading = () => console.log('loading')
+const { store } = core.home
 
-export const BeerList: React.SFC = () => {
-  return (
+const component$ = store.pick('loading', 'beers').pipe(
+  map(({ loading, beers }) => (
     <div className="Beer-List">
       <h3>
         Search Results: ({beers.length}){' '}
@@ -27,5 +28,7 @@ export const BeerList: React.SFC = () => {
         </ul>
       )}
     </div>
-  )
-}
+  ))
+)
+
+export const BeerList = componentFromStream(() => component$)

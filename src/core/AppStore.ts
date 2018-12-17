@@ -1,4 +1,4 @@
-import { createFocusableStore, createStore } from 'lenrix'
+import { createFocusableStore, createStore, silentLoggerOptions } from 'lenrix'
 
 import { AppState, initialAppState } from './AppState'
 
@@ -10,6 +10,6 @@ export const createAppStore = () =>
         (window as any).__REDUX_DEVTOOLS_EXTENSION__ &&
           (window as any).__REDUX_DEVTOOLS_EXTENSION__()
       )
-    : createStore(initialAppState)
+    : createStore(initialAppState, { logger: silentLoggerOptions })
 
 export type AppStore = ReturnType<typeof createAppStore>

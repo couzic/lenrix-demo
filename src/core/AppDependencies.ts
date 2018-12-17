@@ -1,8 +1,17 @@
-import { createBrowserHistory } from 'history'
+import { createBrowserHistory, History } from 'history'
+import { Scheduler } from 'rxjs'
 
-export const createProductionDependencies = () => {
-  const history = createBrowserHistory()
-  return { history }
+import { createBeerService } from '../adapters/createBeerService'
+import { BeerService } from './ports/BeerService'
+
+export interface AppDependencies {
+  history: History
+  beerService: BeerService
+  scheduler?: Scheduler
 }
 
-export type AppDependencies = ReturnType<typeof createProductionDependencies>
+export const createProductionDependencies = (): AppDependencies => {
+  const history = createBrowserHistory()
+  const beerService = createBeerService()
+  return { history, beerService }
+}
