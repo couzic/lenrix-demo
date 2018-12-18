@@ -3,7 +3,6 @@ import { createHomeStore } from '../places/home/HomeStore'
 import { AppDependencies } from './AppDependencies'
 import { createAppStore } from './AppStore'
 import { createRouter } from './Router'
-import { route } from 'observable-tree-router'
 
 export const createAppCore = ({
   history,

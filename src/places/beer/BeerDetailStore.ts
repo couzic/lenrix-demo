@@ -1,3 +1,4 @@
+import { onLoad } from 'lenrix'
 import { pipe } from 'rxjs'
 import { filter, map, switchMap } from 'rxjs/operators'
 
@@ -5,7 +6,6 @@ import { AppStore } from '../../core/AppStore'
 import { BeerService } from '../../core/ports/BeerService'
 import { Router } from '../../core/Router'
 import { Beer } from '../../domain/Beer'
-import { onLoad } from '../../util/onLoad'
 
 export const createBeerDetailStore = (
   appStore: AppStore,

@@ -13,7 +13,7 @@ export const BeerDetail = componentFromStream(() =>
   store.pick('loading', 'beer').pipe(
     map(({ loading, beer }) => (
       <Route matchRouter={core.router.beer} exact>
-        <h3 onClick={backToSearch}>{`<< Back to Search`}</h3>
+        <h3 onClick={backToSearch} className="Search">{`<< Back to Search`}</h3>
         <div className="Content">
           {loading && <img src="/ajax-loader.gif" />}
           {beer && (

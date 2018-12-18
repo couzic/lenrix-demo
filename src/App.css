@@ -97,8 +97,6 @@ li button {
   width: 50px;
 }
 
-.Message {
-}
 .Message--error {
   padding-top: 1rem;
   font-size: 0.8em;
