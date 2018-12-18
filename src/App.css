@@ -1,4 +1,5 @@
-body, html {
+body,
+html {
   margin: 0;
   padding: 0;
 }
@@ -9,7 +10,7 @@ body, html {
   height: 100vh;
 }
 
-.Beer-List {
+.Content {
   position: relative;
   background: #e6e6e6;
   padding: 0 1rem;
@@ -54,8 +55,12 @@ body, html {
 }
 
 @keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 button {
@@ -69,8 +74,8 @@ ul {
 
 li {
   display: flex;
-  padding-bottom: .5em;
-  margin-bottom: .5em;
+  padding-bottom: 0.5em;
+  margin-bottom: 0.5em;
   border-bottom: 1px solid #eaeaea;
 }
 
@@ -92,10 +97,11 @@ li button {
   width: 50px;
 }
 
-.Message {}
+.Message {
+}
 .Message--error {
   padding-top: 1rem;
-  font-size: .8em;
+  font-size: 0.8em;
   color: red;
   text-align: left;
 }

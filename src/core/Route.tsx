@@ -12,6 +12,7 @@ export const Route = componentFromStream<{
     switchMap(({ matchRouter, exact, children }) =>
       matchRouter.match$.pipe(
         map((match: any) => {
+          console.log(match, children)
           if (match === null) {
             return null
           } else if (exact) {

@@ -1,7 +1,9 @@
+import { createBeerDetailStore } from '../places/beer/BeerDetailStore'
 import { createHomeStore } from '../places/home/HomeStore'
 import { AppDependencies } from './AppDependencies'
 import { createAppStore } from './AppStore'
 import { createRouter } from './Router'
+import { route } from 'observable-tree-router'
 
 export const createAppCore = ({
   history,
@@ -11,7 +13,10 @@ export const createAppCore = ({
   const router = createRouter(history)
   const appStore = createAppStore()
   const home = { store: createHomeStore(appStore, beerService, scheduler) }
-  return { router, appStore, home }
+  const beerDetail = {
+    store: createBeerDetailStore(appStore, router, beerService)
+  }
+  return { router, appStore, home, beerDetail }
 }
 
 export type AppCore = ReturnType<typeof createAppCore>

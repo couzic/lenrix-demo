@@ -1,19 +1,19 @@
-import './App.css';
+import './App.css'
 
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
-import { Beer } from './places/beer/Beer';
-import { Home } from './places/home/Home';
+import { BeerDetail } from './places/beer/BeerDetail'
+import { Home } from './places/home/Home'
 
 class App extends Component {
   render() {
     return (
       <div className="App">
         <Home />
-        <Beer />
+        <BeerDetail />
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App

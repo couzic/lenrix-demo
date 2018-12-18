@@ -8,22 +8,23 @@ import { createAppCore } from '../../core/AppCore'
 import { BeerService } from '../../core/ports/BeerService'
 import { Beer } from '../../domain/Beer'
 import { HomeStore } from './HomeStore'
+import { Router } from '../../core/Router'
 
 chai.use(sinonChai)
 const { expect } = chai
 
 describe('HomeStore', () => {
   let store: HomeStore
+  let router: Router
   let scheduler: VirtualTimeScheduler
   let beerService: BeerService
   beforeEach(() => {
     const history = createMemoryHistory()
     scheduler = new VirtualTimeScheduler()
-    beerService = {
-      searchBeers: () => never()
-    }
-    const appCore = createAppCore({ history, scheduler, beerService })
+    beerService = {} as any
+    const appCore = createAppCore({ history, beerService, scheduler })
     store = appCore.home.store
+    router = appCore.router
   })
   it('has initial state', () => {
     expect(store.currentState).to.deep.equal({
@@ -71,6 +72,14 @@ describe('HomeStore', () => {
       it('stores beer list', () => {
         expect(store.currentState.loading).to.be.false
         expect(store.currentState.beers).to.equal(beerList)
+      })
+      describe('when beer is navigated to', () => {
+        beforeEach(() => {
+          router.beer.push({ beerId: '1' })
+        })
+        it('hides home page', () => {
+          expect(router.home.isMatchingExact).to.be.false
+        })
       })
       describe('when empty beer name is searched', () => {
         beforeEach(() => {
