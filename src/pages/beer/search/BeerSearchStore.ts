@@ -1,5 +1,5 @@
 import { AppStore } from '../../../core/AppStore'
 
-export const createHomeStore = (appStore: AppStore) => appStore
+export const createBeerSearchStore = (appStore: AppStore) => appStore
 
-export type HomeStore = ReturnType<typeof createHomeStore>
+export type BeerSearchStore = ReturnType<typeof createBeerSearchStore>
