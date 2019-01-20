@@ -1,3 +1,9 @@
-export interface BeerSearchState {}
+export interface BeerSearchState {
+  searchInputValue: string
+  pending: boolean
+}
 
-export const initialBeerSearchState: BeerSearchState = {}
+export const initialBeerSearchState: BeerSearchState = {
+  searchInputValue: '',
+  pending: false
+}
