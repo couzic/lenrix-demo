@@ -3,7 +3,7 @@ import { Scheduler } from 'rxjs'
 
 import { BeerService } from './ports/BeerService'
 
-export interface AppDependencies {
+export interface CoreDependencies {
   history: History
   beerService: BeerService
   scheduler?: Scheduler

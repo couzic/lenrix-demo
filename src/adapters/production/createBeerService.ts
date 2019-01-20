@@ -1,7 +1,7 @@
 import { ajax } from 'rxjs/ajax'
 import { map } from 'rxjs/operators'
 
-import { BeerService } from '../core/ports/BeerService'
+import { BeerService } from '../../core/ports/BeerService'
 
 const beersApiUrl = `https://api.punkapi.com/v2/beers`
 

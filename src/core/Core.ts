@@ -1,15 +1,15 @@
-import { AppDependencies } from './AppDependencies'
 import { createAppStore } from './AppStore'
+import { CoreDependencies } from './CoreDependencies'
 import { createRouter } from './Router'
 
-export const createAppCore = ({
+export const createCore = ({
   history,
   beerService,
   scheduler
-}: AppDependencies) => {
+}: CoreDependencies) => {
   const router = createRouter(history)
   const appStore = createAppStore()
   return { router, appStore }
 }
 
-export type AppCore = ReturnType<typeof createAppCore>
+export type Core = ReturnType<typeof createCore>
