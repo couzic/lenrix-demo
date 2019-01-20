@@ -1,4 +1,4 @@
-import { AppStore } from '../../core/AppStore'
+import { AppStore } from '../../../core/AppStore'
 
 export const createHomeStore = (appStore: AppStore) => appStore
 

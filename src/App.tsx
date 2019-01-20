@@ -2,15 +2,15 @@ import './App.css'
 
 import React, { Component } from 'react'
 
-import { BeerDetail } from './places/beer/BeerDetail'
-import { Home } from './places/home/Home'
+import { BeerPage } from './pages/beer/BeerPage'
+import { Home } from './pages/home/Home'
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
+      <div>
         <Home />
-        <BeerDetail />
+        <BeerPage />
       </div>
     )
   }

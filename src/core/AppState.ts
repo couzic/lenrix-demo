@@ -1,15 +1,22 @@
 import {
   BeerDetailState,
   initialBeerDetailState
-} from '../places/beer/BeerDetailState'
-import { HomeState, initialHomeState } from '../places/home/HomeState'
+} from '../pages/beer/detail/BeerDetailState'
+import {
+  BeerSearchState,
+  initialBeerSearchState
+} from '../pages/beer/search/BeerSearchState'
 
 export interface AppState {
-  home: HomeState
-  beerDetail: BeerDetailState
+  beer: {
+    search: BeerSearchState
+    detail: BeerDetailState
+  }
 }
 
 export const initialAppState: AppState = {
-  home: initialHomeState,
-  beerDetail: initialBeerDetailState
+  beer: {
+    search: initialBeerSearchState,
+    detail: initialBeerDetailState
+  }
 }

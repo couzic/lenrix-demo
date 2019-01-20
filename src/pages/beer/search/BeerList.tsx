@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Beer } from '../../domain/Beer'
+import { Beer } from '../../../domain/Beer'
 
 export const BeerList = () => (
   <div className="Content">

@@ -7,8 +7,16 @@ export const createRouter = (history: History) =>
       path: '/'
     }),
     beer: route({
-      path: '/beer/:beerId',
-      params: ['beerId']
+      path: '/beer',
+      nested: {
+        search: route({
+          path: '/search'
+        }),
+        detail: route({
+          path: '/:beerId',
+          params: ['beerId']
+        })
+      }
     })
   })
 
