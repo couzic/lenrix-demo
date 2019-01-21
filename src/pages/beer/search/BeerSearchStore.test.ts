@@ -1,12 +1,13 @@
 import chai from 'chai'
-import { of } from 'rxjs'
-import { stub } from 'sinon'
+import { Subject } from 'rxjs'
+import { SinonStub, stub } from 'sinon'
 import sinonChai from 'sinon-chai'
 
 import { createTestDependencies } from '../../../adapters/test/createTestDependencies'
 import { createCore } from '../../../core/Core'
 import { BeerService } from '../../../core/ports/BeerService'
 import { Router } from '../../../core/Router'
+import { Beer } from '../../../domain/Beer'
 import { BeerSearchStore } from './BeerSearchStore'
 
 chai.use(sinonChai)
@@ -28,8 +29,10 @@ describe('BeerSearchStore', () => {
   })
   describe('when search input value changes', () => {
     const newValue = 'newValue'
+    let receivedBeers$: Subject<Beer[]>
     beforeEach(() => {
-      beerService.searchBeers = stub().returns(of(undefined))
+      receivedBeers$ = new Subject()
+      beerService.searchBeers = stub().returns(receivedBeers$)
       store.dispatch({ searchInputChanged: newValue })
     })
     it('is pending', () => {
@@ -39,6 +42,30 @@ describe('BeerSearchStore', () => {
       expect(beerService.searchBeers).to.have.been.calledOnceWithExactly(
         newValue
       )
+    })
+    describe('when search results received', () => {
+      const beers: Beer[] = [{}] as any
+      beforeEach(() => {
+        receivedBeers$.next(beers)
+      })
+      it('stores received beers', () => {
+        expect(store.currentState.beers).to.equal(beers)
+      })
+      it('is not pending anymore', () => {
+        expect(store.currentState.pending).to.be.false
+      })
+      describe('when search input is cleared', () => {
+        beforeEach(() => {
+          ;(beerService.searchBeers as SinonStub).resetHistory()
+          store.dispatch({ searchInputChanged: '' })
+        })
+        it('clears results', () => {
+          expect(store.currentState.beers).to.be.undefined
+        })
+        it('does NOT fetch search results', () => {
+          expect(beerService.searchBeers).not.to.have.been.called
+        })
+      })
     })
   })
 })

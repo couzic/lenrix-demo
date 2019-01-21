@@ -1,5 +1,5 @@
 import { pipe } from 'rxjs'
-import { map, switchMap } from 'rxjs/operators'
+import { filter, map, switchMap } from 'rxjs/operators'
 
 import { AppStore } from '../../../core/AppStore'
 import { CoreDependencies } from '../../../core/CoreDependencies'
@@ -13,15 +13,20 @@ export const createBeerSearchStore = (
     .focusPath('beer', 'search')
     .actionTypes<{
       searchInputChanged: string
-      searchResultsLoaded: Beer[]
+      receivedBeers: Beer[]
     }>()
     .updates(_ => ({
-      searchInputChanged: value => _.setFields({ pending: true })
+      searchInputChanged: value =>
+        value === ''
+          ? _.setFields({ beers: undefined })
+          : _.setFields({ pending: true }),
+      receivedBeers: beers => _.setFields({ beers, pending: false })
     }))
     .epics({
       searchInputChanged: pipe(
+        filter(inputValue => inputValue.length > 0),
         switchMap(inputValue => beerService.searchBeers(inputValue)),
-        map(beers => ({ searchResultsLoaded: beers }))
+        map(beers => ({ receivedBeers: beers }))
       )
     })
 
