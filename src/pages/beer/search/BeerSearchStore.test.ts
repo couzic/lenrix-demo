@@ -60,11 +60,23 @@ describe('BeerSearchStore', () => {
           store.dispatch({ searchInputChanged: '' })
         })
         it('clears results', () => {
-          expect(store.currentState.beers).to.be.undefined
+          expect(store.currentState.beers).to.be.empty
         })
         it('does NOT fetch search results', () => {
           expect(beerService.searchBeers).not.to.have.been.called
         })
+      })
+    })
+    describe('when search input is cleared before results are received', () => {
+      beforeEach(() => {
+        store.dispatch({ searchInputChanged: '' })
+        receivedBeers$.next([{} as any])
+      })
+      it('clears results', () => {
+        expect(store.currentState.beers).to.be.empty
+      })
+      it('is not pending', () => {
+        expect(store.currentState.pending).to.be.false
       })
     })
   })

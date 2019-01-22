@@ -12,21 +12,20 @@ export const BeerList = componentFromStream(() =>
     map(({ pending, beers }) => (
       <div className="Content">
         <h3>
-          Search Results: ({beers ? beers.length : 0}){' '}
+          Search Results: ({beers.length}){' '}
           {pending && <img src="/ajax-loader.gif" />}
         </h3>
         <ul>
-          {beers &&
-            beers.map((beer: Beer) => (
-              <li key={beer.id} className="Beer">
-                <figure className="Beer-Image">
-                  <img src={beer.image_url} />
-                </figure>
-                <p>
-                  {beer.name} <small>{beer.tagline}</small>
-                </p>
-              </li>
-            ))}
+          {beers.map((beer: Beer) => (
+            <li key={beer.id} className="Beer">
+              <figure className="Beer-Image">
+                <img src={beer.image_url} />
+              </figure>
+              <p>
+                {beer.name} <small>{beer.tagline}</small>
+              </p>
+            </li>
+          ))}
         </ul>
       </div>
     ))

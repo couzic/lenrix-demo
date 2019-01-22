@@ -1,12 +1,11 @@
 import { Beer } from '../../../domain/Beer'
 
 export interface BeerSearchState {
-  searchInputValue: string
   pending: boolean
-  beers?: Beer[]
+  beers: Beer[]
 }
 
 export const initialBeerSearchState: BeerSearchState = {
-  searchInputValue: '',
-  pending: false
+  pending: false,
+  beers: []
 }

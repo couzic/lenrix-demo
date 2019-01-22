@@ -1,5 +1,5 @@
 import { pipe } from 'rxjs'
-import { filter, map, switchMap } from 'rxjs/operators'
+import { filter, map, mapTo, switchMap, takeUntil } from 'rxjs/operators'
 
 import { AppStore } from '../../../core/AppStore'
 import { CoreDependencies } from '../../../core/CoreDependencies'
@@ -14,20 +14,30 @@ export const createBeerSearchStore = (
     .actionTypes<{
       searchInputChanged: string
       receivedBeers: Beer[]
+      cancelBeerSearch: undefined
     }>()
     .updates(_ => ({
-      searchInputChanged: value =>
-        value === ''
-          ? _.setFields({ beers: undefined })
-          : _.setFields({ pending: true }),
-      receivedBeers: beers => _.setFields({ beers, pending: false })
+      searchInputChanged: value => _.setFields({ pending: true }),
+      receivedBeers: beers => _.setFields({ pending: false, beers }),
+      cancelBeerSearch: () => _.setFields({ pending: false, beers: [] })
     }))
     .epics({
       searchInputChanged: pipe(
-        filter(inputValue => inputValue.length > 0),
-        switchMap(inputValue => beerService.searchBeers(inputValue)),
-        map(beers => ({ receivedBeers: beers }))
+        filter(value => value === ''),
+        mapTo({ cancelBeerSearch: undefined })
       )
+    })
+    .epics({
+      searchInputChanged: (inputValue$, store) =>
+        inputValue$.pipe(
+          filter(inputValue => inputValue.length > 0),
+          switchMap(inputValue =>
+            beerService
+              .searchBeers(inputValue)
+              .pipe(takeUntil(store.action$.ofType('cancelBeerSearch')))
+          ),
+          map(beers => ({ receivedBeers: beers }))
+        )
     })
 
 export type BeerSearchStore = ReturnType<typeof createBeerSearchStore>
