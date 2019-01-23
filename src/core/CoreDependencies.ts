@@ -1,10 +1,9 @@
-import { History } from 'history'
 import { SchedulerLike } from 'rxjs'
-
 import { BeerService } from './ports/BeerService'
+import { Router } from './Router'
 
 export interface CoreDependencies {
-  history: History
+  router: Router
   beerService: BeerService
   scheduler?: SchedulerLike
 }

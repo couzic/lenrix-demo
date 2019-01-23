@@ -12,8 +12,9 @@ export const createBeerService = (): BeerService => ({
       .pipe(delay(500) as any)
   },
   fetchBeer(beerId) {
-    return ajax
-      .getJSON(beersApiUrl + '/' + beerId)
-      .pipe(map(_ => (_ as any)[0]))
+    return ajax.getJSON(beersApiUrl + '/' + beerId).pipe(
+      delay(500),
+      map(_ => (_ as any)[0])
+    )
   }
 })

@@ -1,3 +1,10 @@
-export interface BeerDetailState {}
+import { Beer } from '../../../domain/Beer'
 
-export const initialBeerDetailState: BeerDetailState = {}
+export interface BeerDetailState {
+  pending: boolean
+  beer?: Beer
+}
+
+export const initialBeerDetailState: BeerDetailState = {
+  pending: false
+}

@@ -19,6 +19,7 @@ html {
 .Beer {
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 
 .Beer small {
