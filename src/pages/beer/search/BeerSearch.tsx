@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { core } from '../../../core'
-import { Route } from '../../../core/Route'
+import { Route } from '../../../util/Route'
 import { BeerList } from './BeerList'
 import { SearchInput } from './SearcInput'
 
