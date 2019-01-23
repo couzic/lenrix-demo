@@ -1,5 +1,12 @@
 import { pipe } from 'rxjs'
-import { filter, map, mapTo, switchMap, takeUntil } from 'rxjs/operators'
+import {
+  debounceTime,
+  filter,
+  map,
+  mapTo,
+  switchMap,
+  takeUntil
+} from 'rxjs/operators'
 
 import { AppStore } from '../../../core/AppStore'
 import { CoreDependencies } from '../../../core/CoreDependencies'
@@ -7,7 +14,7 @@ import { Beer } from '../../../domain/Beer'
 
 export const createBeerSearchStore = (
   appStore: AppStore,
-  { beerService }: CoreDependencies
+  { beerService, scheduler }: CoreDependencies
 ) =>
   appStore
     .focusPath('beer', 'search')
@@ -30,6 +37,7 @@ export const createBeerSearchStore = (
     .epics(store => ({
       searchInputChanged: pipe(
         filter(inputValue => inputValue.length > 0),
+        debounceTime(500, scheduler),
         switchMap(inputValue =>
           beerService
             .searchBeers(inputValue)

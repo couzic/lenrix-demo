@@ -1,12 +1,11 @@
 import chai from 'chai'
-import { Subject } from 'rxjs'
+import { Subject, VirtualTimeScheduler } from 'rxjs'
 import { SinonStub, stub } from 'sinon'
 import sinonChai from 'sinon-chai'
 
 import { createTestDependencies } from '../../../adapters/test/createTestDependencies'
 import { createCore } from '../../../core/Core'
 import { BeerService } from '../../../core/ports/BeerService'
-import { Router } from '../../../core/Router'
 import { Beer } from '../../../domain/Beer'
 import { BeerSearchStore } from './BeerSearchStore'
 
@@ -14,13 +13,11 @@ chai.use(sinonChai)
 const { expect } = chai
 
 describe('BeerSearchStore', () => {
-  let router: Router
   let beerService: BeerService
   let store: BeerSearchStore
   beforeEach(() => {
     const dependencies = createTestDependencies()
     const core = createCore(dependencies)
-    router = core.router
     beerService = dependencies.beerService
     store = core.beer.search.store
   })
@@ -79,5 +76,29 @@ describe('BeerSearchStore', () => {
         expect(store.currentState.pending).to.be.false
       })
     })
+  })
+})
+
+describe('BeerSearchStore (Virtual Time)', () => {
+  let scheduler: VirtualTimeScheduler
+  let beerService: BeerService
+  let store: BeerSearchStore
+  beforeEach(() => {
+    scheduler = new VirtualTimeScheduler()
+    const dependencies = createTestDependencies({ scheduler })
+    const core = createCore(dependencies)
+    beerService = dependencies.beerService
+    store = core.beer.search.store
+  })
+  it('debounces input changes', () => {
+    beerService.searchBeers = stub()
+    store.dispatch({ searchInputChanged: 'b' })
+    store.dispatch({ searchInputChanged: 'bl' })
+    store.dispatch({ searchInputChanged: 'blo' })
+    store.dispatch({ searchInputChanged: 'blon' })
+    store.dispatch({ searchInputChanged: 'blond' })
+    scheduler.flush()
+
+    expect(beerService.searchBeers).to.have.been.calledOnceWithExactly('blond')
   })
 })
