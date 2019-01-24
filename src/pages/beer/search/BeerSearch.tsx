@@ -3,7 +3,7 @@ import React from 'react'
 import { core } from '../../../core'
 import { Route } from '../../../util/Route'
 import { BeerList } from './BeerList'
-import { SearchInput } from './SearcInput'
+import { SearchInput } from './SearchInput'
 
 export const BeerSearch: React.FC = () => (
   <Route matchRouter={core.router.beer.search} exact>
