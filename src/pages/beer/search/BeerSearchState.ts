@@ -1,3 +1,11 @@
-export interface BeerSearchState {}
+import { Beer } from '../../../domain/Beer'
 
-export const initialBeerSearchState: BeerSearchState = {}
+export interface BeerSearchState {
+  pending: boolean
+  results: Beer[]
+}
+
+export const initialBeerSearchState: BeerSearchState = {
+  pending: false,
+  results: []
+}
